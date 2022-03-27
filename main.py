@@ -9,6 +9,7 @@ intents.members = True
 client=discord.Client(intents=intents)    
 TOKEN = os.environ.get('TOKEN')
 CHANNEL = int(os.environ.get('CHANNEL'))
+print(CHANNEL)
 
 def start(update, context):
     """Send a message when the command /start is issued."""
@@ -28,6 +29,7 @@ def echo(update, context):
     """Send message on telegram."""
     # update.message.reply_text(update.message.text)
     channel = client.get_channel(CHANNEL)
+    print(channel)
     client.loop.create_task(channel.send(f"<{update.message.from_user.username}:>\n{update.message.text}"))
   
 
@@ -52,15 +54,13 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    print(client.user)
     if message.attachments:
       for url in message.attachments: 
         updater.dispatcher.bot.send_message(chat_id=chat_id,text=f"{url}",parse_mode=ParseMode.HTML)
 
     if message.author != client.user:
       updater.dispatcher.bot.send_message(text=f"<{message.author}>: \n{message.content}",chat_id=chat_id)
-
-
-
 
 
 keep_alive()
