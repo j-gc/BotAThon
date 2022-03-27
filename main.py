@@ -15,10 +15,6 @@ def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text('Hi!')
 
-def help(update, context):
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
-
 def downloader(update, context):
 	"""Download file from telegram"""
 	x = context.bot.get_file(update.message.document).download()
@@ -26,7 +22,7 @@ def downloader(update, context):
 	client.loop.create_task(channel.send(file=discord.File(x)))
 
 def echo(update, context):
-    """Send message on telegram."""
+    """Send message on discord."""
     # update.message.reply_text(update.message.text)
     channel = client.get_channel(CHANNEL)
     print(channel)
@@ -41,8 +37,6 @@ dispatcher = updater.dispatcher
 dispatcher.add_handler(MessageHandler(Filters.text, echo))
 dispatcher.add_handler(MessageHandler(Filters.document, downloader))
 dispatcher.add_handler(CommandHandler("start", start))
-dispatcher.add_handler(CommandHandler("help", help))
-
 
 updater.start_polling()
 
